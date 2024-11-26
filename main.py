@@ -8,7 +8,20 @@ def main():
     start = (4, 11)  # Estado inicial
     goal = (10, 0)   # Estado objetivo
 
-    solution = agent.bfs(start, goal)
+    # print("Busca em Largura (BFS):")
+    # solution = agent.bfs(start, goal)
+    # if solution:
+    #     print("Solução encontrada:")
+    #     for state, action in solution:
+    #         print(f"Estado: {state}, Ação: {action}")
+    #     print("Número de passos:", len(solution) - 1)
+    # else:
+    #     print("Nenhuma solução encontrada.")
+    # 
+    #   ###################################################################
+
+    print("Busca em Profundidade (DFS):")
+    solution = agent.dfs(start, goal)
     if solution:
         print("Solução encontrada:")
         for state, action in solution:

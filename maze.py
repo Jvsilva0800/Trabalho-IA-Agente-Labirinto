@@ -15,6 +15,7 @@ class Maze:
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+        
 
     def is_valid_position(self, x, y):
         """Verifica se uma posição é válida (dentro do labirinto e desocupada)."""
