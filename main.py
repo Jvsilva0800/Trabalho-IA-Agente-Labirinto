@@ -20,8 +20,20 @@ def main():
     # 
     #   ###################################################################
 
-    print("Busca em Profundidade (DFS):")
-    solution = agent.dfs(start, goal)
+    # print("Busca em Profundidade (DFS):")
+    # solution = agent.dfs(start, goal)
+    # if solution:
+    #     print("Solução encontrada:")
+    #     for state, action in solution:
+    #         print(f"Estado: {state}, Ação: {action}")
+    #     print("Número de passos:", len(solution) - 1)
+    # else:
+    #     print("Nenhuma solução encontrada.")
+    #
+    #   ###################################################################
+
+    print("Busca com Heurística Euclidiana (A*):")
+    solution = agent.a_star(start, goal)
     if solution:
         print("Solução encontrada:")
         for state, action in solution:

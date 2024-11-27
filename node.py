@@ -15,3 +15,7 @@ class Node:
     def __repr__(self):
         return (f"Node(state={self.state}, action={self.action}, "
                 f"path_cost={self.path_cost})")
+
+    # Método de comparação (menor que)
+    def __lt__(self, other):
+        return self.path_cost < other.path_cost
