@@ -1,3 +1,5 @@
+from pyamaze import maze
+
 class Maze:
     def __init__(self):
         # Define o labirinto fixo 12x12
@@ -22,3 +24,4 @@ class Maze:
         if 0 <= x < len(self.grid) and 0 <= y < len(self.grid[0]):
             return self.grid[x][y] == 1
         return False
+    
