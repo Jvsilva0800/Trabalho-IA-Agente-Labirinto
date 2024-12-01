@@ -43,6 +43,8 @@ class Agent:
                     frontier.append(child_node)
              # Mostra o conteúdo da fronteira
             self.show_frontier(frontier)
+            # Retornar as posições da fronteira para visualização
+            yield [node.state for node in frontier]  # Lista das posições da fronteira
 
         return None  # Se não houver solução
     
@@ -85,6 +87,7 @@ class Agent:
                     frontier.append(child_node)  # Adiciona ao topo da pilha
             # Mostra o conteúdo da fronteira
             self.show_frontier(frontier)
+            yield [node.state for node in frontier]
 
         return None  # Se não encontrar solução
 
