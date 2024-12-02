@@ -43,31 +43,34 @@ def main():
 
     start = (4, 11)  # Estado inicial
     goal = (10, 0)   # Estado objetivo
-    bfs_generator = my_agent.bfs(start, goal)
+    #bfs_generator = my_agent.bfs(start, goal)
     #dfs_generator = my_agent.dfs(start, goal)
+    a_star_generator = my_agent.a_star(start, goal)
 
     #Loop principal
-    fronteira = []
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+    # fronteira = []
+    # while True:
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             sys.exit()
 
-        # Atualizar a fronteira a cada iteração da busca
-        try:
-            fronteira = next(bfs_generator)  # Obter próxima fronteira
-        except StopIteration:
-            pass  # Busca concluída
+    #     # Atualizar a fronteira a cada iteração da busca
+    #     try:
+    #         fronteira = next(bfs_generator)  # Obter próxima fronteira
+    #     except StopIteration:
+    #         pass  # Busca concluída
 
-        # Desenhar o labirinto e a fronteira
-        tela.fill((0, 0, 0))  # Limpar a tela
-        desenhar_labirinto(tela, my_maze.grid, fronteira)
+    #     # Desenhar o labirinto e a fronteira
+    #     tela.fill((0, 0, 0))  # Limpar a tela
+    #     desenhar_labirinto(tela, my_maze.grid, fronteira)
 
-        pygame.display.flip()
-        clock.tick(5)  # Limitar a 10 FPS para visualizar a expansão
+    #     pygame.display.flip()
+    #     clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
 
-
+    #   ###################################################################
+    
+    
 
     # fronteira = []
     # while True:
@@ -87,7 +90,30 @@ def main():
     #     desenhar_labirinto(tela, my_maze.grid, fronteira)
 
     #     pygame.display.flip()
-    #     clock.tick(5)  # Limitar a 10 FPS para visualizar a expansão
+    #     clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
+    #   ########################################################################
+
+
+    fronteira = []
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        # Atualizar a fronteira a cada iteração da busca
+        try:
+            fronteira = next(a_star_generator)  # Obter próxima fronteira
+        except StopIteration:
+            pass  # Busca concluída
+
+        # Desenhar o labirinto e a fronteira
+        tela.fill((0, 0, 0))  # Limpar a tela
+        desenhar_labirinto(tela, my_maze.grid, fronteira)
+
+        pygame.display.flip()
+        clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
+    #   ########################################################################
 
     # print("Busca em Largura (BFS):")
     # solution = my_agent.bfs(start, goal)
@@ -114,7 +140,7 @@ def main():
     #   ###################################################################
 
     # print("Busca com Heurística Euclidiana (A*):")
-    # solution = agent.a_star(start, goal)
+    # solution = my_agent.a_star(start, goal)
     # if solution:
     #     print("Solução encontrada:")
     #     for state, action in solution:

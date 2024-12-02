@@ -21,7 +21,7 @@ class Agent:
             # Verifica se o nó atual contém o estado objetivo
             if current_node.state == goal:
                 return self.reconstruct_path(current_node)
-
+    
             # Adiciona o estado atual aos explorados
             explored.add(current_node.state)
 
@@ -106,6 +106,7 @@ class Agent:
             # Verifica se o nó atual contém o estado objetivo
             if current_node.state == goal:
                 return self.reconstruct_path(current_node)
+            
 
             # Adiciona o estado atual aos explorados
             explored.add(current_node.state)
@@ -137,6 +138,7 @@ class Agent:
                     heapq.heappush(frontier, (f_cost, child_node))  # Adiciona à fila de prioridade
             # Mostra o conteúdo da fronteira
             self.show_frontier_A(frontier)
+            yield [node.state for _, node in frontier]
 
         return None  # Se não encontrar solução
     
