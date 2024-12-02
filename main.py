@@ -36,64 +36,36 @@ def main():
     my_maze = Maze()
     my_agent = Agent(my_maze)
 
+    start = (4, 11)  # Estado inicial
+    goal = (10, 0)   # Estado objetivo
+
+    # Solicitar escolha do algoritmo ao usuário
+    print("Escolha o algoritmo de busca:")
+    print("1 - BFS (Busca em Largura)")
+    print("2 - DFS (Busca em Profundidade)")
+    print("3 - A* (Busca com Heurística)")
+    escolha = input("Digite o número do algoritmo desejado: ")
+
+    if escolha == "1":
+        generator = my_agent.bfs(start, goal)
+        algoritmo = "BFS"
+    elif escolha == "2":
+        generator = my_agent.dfs(start, goal)
+        algoritmo = "DFS"
+    elif escolha == "3":
+        generator = my_agent.a_star(start, goal)
+        algoritmo = "A*"
+    else:
+        print("Opção inválida. Encerrando o programa.")
+        return
+
+    print(f"Executando {algoritmo}...")
+
     pygame.init()
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption("Labirinto")
     clock = pygame.time.Clock()
-
-    start = (4, 11)  # Estado inicial
-    goal = (10, 0)   # Estado objetivo
-    #bfs_generator = my_agent.bfs(start, goal)
-    #dfs_generator = my_agent.dfs(start, goal)
-    a_star_generator = my_agent.a_star(start, goal)
-
-    #Loop principal
-    # fronteira = []
-    # while True:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             sys.exit()
-
-    #     # Atualizar a fronteira a cada iteração da busca
-    #     try:
-    #         fronteira = next(bfs_generator)  # Obter próxima fronteira
-    #     except StopIteration:
-    #         pass  # Busca concluída
-
-    #     # Desenhar o labirinto e a fronteira
-    #     tela.fill((0, 0, 0))  # Limpar a tela
-    #     desenhar_labirinto(tela, my_maze.grid, fronteira)
-
-    #     pygame.display.flip()
-    #     clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
-
-    #   ###################################################################
     
-    
-
-    # fronteira = []
-    # while True:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             sys.exit()
-
-    #     # Atualizar a fronteira a cada iteração da busca
-    #     try:
-    #         fronteira = next(dfs_generator)  # Obter próxima fronteira
-    #     except StopIteration:
-    #         pass  # Busca concluída
-
-    #     # Desenhar o labirinto e a fronteira
-    #     tela.fill((0, 0, 0))  # Limpar a tela
-    #     desenhar_labirinto(tela, my_maze.grid, fronteira)
-
-    #     pygame.display.flip()
-    #     clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
-    #   ########################################################################
-
-
     fronteira = []
     while True:
         for event in pygame.event.get():
@@ -103,7 +75,7 @@ def main():
 
         # Atualizar a fronteira a cada iteração da busca
         try:
-            fronteira = next(a_star_generator)  # Obter próxima fronteira
+            fronteira = next(generator)  # Obter próxima fronteira
         except StopIteration:
             pass  # Busca concluída
 
@@ -112,42 +84,9 @@ def main():
         desenhar_labirinto(tela, my_maze.grid, fronteira)
 
         pygame.display.flip()
-        clock.tick(8)  # Limitar a 10 FPS para visualizar a expansão
-    #   ########################################################################
+        clock.tick(8)  # Limitar a 8 FPS para visualizar a expansão
+    
 
-    # print("Busca em Largura (BFS):")
-    # solution = my_agent.bfs(start, goal)
-    # if solution:
-    #     print("Solução encontrada:")
-    #     for state, action in solution:
-    #         print(f"Estado: {state}, Ação: {action}")
-    #     print("Número de passos:", len(solution) - 1)
-    # else:
-    #     print("Nenhuma solução encontrada.")
-    # 
-    #   ###################################################################
-
-    # print("Busca em Profundidade (DFS):")
-    # solution = agent.dfs(start, goal)
-    # if solution:
-    #     print("Solução encontrada:")
-    #     for state, action in solution:
-    #         print(f"Estado: {state}, Ação: {action}")
-    #     print("Número de passos:", len(solution) - 1)
-    # else:
-    #     print("Nenhuma solução encontrada.")
-    #
-    #   ###################################################################
-
-    # print("Busca com Heurística Euclidiana (A*):")
-    # solution = my_agent.a_star(start, goal)
-    # if solution:
-    #     print("Solução encontrada:")
-    #     for state, action in solution:
-    #         print(f"Estado: {state}, Ação: {action}")
-    #     print("Número de passos:", len(solution) - 1)
-    # else:
-    #     print("Nenhuma solução encontrada.")
 
 if __name__ == "__main__":
     main()
