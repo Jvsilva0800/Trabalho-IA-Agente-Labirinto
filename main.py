@@ -12,11 +12,10 @@ ALTURA_TELA = 640
 # Cores
 BRANCO = (255, 255, 255)
 CINZA = (190,190,190)
-VERMELHO = (255, 0, 0)
 AZUL = (0, 0, 255)
 
 def desenhar_labirinto(tela, labirinto, fronteira):
-    """Desenha o labirinto e destaca a fronteira."""
+    #Desenha o labirinto e destaca a fronteira.
     for r, linha in enumerate(labirinto):
         for c, valor in enumerate(linha):
             x = c * LARGURA_CELULA
@@ -84,9 +83,8 @@ def main():
         desenhar_labirinto(tela, my_maze.grid, fronteira)
 
         pygame.display.flip()
-        clock.tick(8)  # Limitar a 8 FPS para visualizar a expansão
+        clock.tick(10)  # Limitar a 8 FPS para visualizar a expansão
     
-
-
 if __name__ == "__main__":
     main()
+

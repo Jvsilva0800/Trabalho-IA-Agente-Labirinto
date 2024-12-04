@@ -3,16 +3,19 @@ from node import Node
 import heapq #O heapq transforma a lista em uma estrutura que mantém a propriedade de heap (menor elemento no topo).
 import math
 
+
+
 class Agent:
     def __init__(self, maze):
         self.maze = maze
 
     def bfs(self, start, goal):
-        """Implementa a Busca em Largura."""
+        #Implementa a Busca em Largura.
         # Inicializa a fronteira com o nó inicial
         start_node = Node(state=start, parent=None, action=None, path_cost=0)
         frontier = deque([start_node])  # Fila FIFO para os nós
         explored = set()  # Conjunto de estados explorados
+        contador_caminhi_percorrido = -1 #para não contar o primeiro nó
 
         while frontier:
             # Remove o nó da fronteira
@@ -20,7 +23,9 @@ class Agent:
 
             # Verifica se o nó atual contém o estado objetivo
             if current_node.state == goal:
-                return self.reconstruct_path(current_node)
+                self.reconstruct_path(current_node)
+                self.path_cost(contador_caminhi_percorrido)
+                break
     
             # Adiciona o estado atual aos explorados
             explored.add(current_node.state)
@@ -41,6 +46,7 @@ class Agent:
                         path_cost=current_node.path_cost + 1
                     )
                     frontier.append(child_node)
+                    contador_caminhi_percorrido += 1
              # Mostra o conteúdo da fronteira
             self.show_frontier(frontier)
             # Retornar as posições da fronteira para visualização
@@ -49,10 +55,11 @@ class Agent:
         return None  # Se não houver solução
     
     def dfs(self, start, goal):
-        """Implementa a Busca em Profundidade."""
+        #Implementa a Busca em Profundidade.
         start_node = Node(state=start, parent=None, action=None, path_cost=0)
         frontier = [start_node]  # Pilha para os nós
         explored = set()  # Conjunto de estados explorados
+        contador_caminhi_percorrido = -1 #para não contar o primeiro nó
 
         while frontier:
             # Remove o nó do topo da pilha
@@ -60,7 +67,9 @@ class Agent:
 
             # Verifica se o nó atual contém o estado objetivo
             if current_node.state == goal:
-                return self.reconstruct_path(current_node)
+                self.reconstruct_path(current_node)
+                self.path_cost(contador_caminhi_percorrido)
+                break
 
             # Adiciona o estado atual aos explorados
             explored.add(current_node.state)
@@ -85,6 +94,7 @@ class Agent:
                         path_cost=current_node.path_cost + 1
                     )
                     frontier.append(child_node)  # Adiciona ao topo da pilha
+                    contador_caminhi_percorrido += 1
             # Mostra o conteúdo da fronteira
             self.show_frontier(frontier)
             yield [node.state for node in frontier]
@@ -93,11 +103,12 @@ class Agent:
 
         
     def a_star(self, start, goal):
-        """Implementa a Busca A* com Heurística Euclidiana."""
+        #Implementa a Busca A* com Heurística Euclidiana.
         start_node = Node(state=start, parent=None, action=None, path_cost=0)
         frontier = []  # Fila de prioridade
         heapq.heappush(frontier, (0, start_node))  # Adiciona o nó inicial com f(n)=0
         explored = set()  # Conjunto de estados explorados
+        contador_caminhi_percorrido = -1 #para não contar o primeiro nó
 
         while frontier:
             # Remove o nó com menor f(n) da fronteira
@@ -105,8 +116,9 @@ class Agent:
 
             # Verifica se o nó atual contém o estado objetivo
             if current_node.state == goal:
-                return self.reconstruct_path(current_node)
-            
+                self.reconstruct_path(current_node)
+                self.path_cost(contador_caminhi_percorrido)
+                break
 
             # Adiciona o estado atual aos explorados
             explored.add(current_node.state)
@@ -136,6 +148,7 @@ class Agent:
                         path_cost=g_cost
                     )
                     heapq.heappush(frontier, (f_cost, child_node))  # Adiciona à fila de prioridade
+                    contador_caminhi_percorrido+=1
             # Mostra o conteúdo da fronteira
             self.show_frontier_A(frontier)
             yield [node.state for _, node in frontier]
@@ -143,11 +156,11 @@ class Agent:
         return None  # Se não encontrar solução
     
     def euclidean_distance(self, state, goal):
-        """Calcula a distância Euclidiana entre o estado atual e o objetivo."""
+        #Calcula a distância Euclidiana entre o estado atual e o objetivo.
         return math.sqrt((goal[0] - state[0]) ** 2 + (goal[1] - state[1]) ** 2)
 
     def show_frontier(self, frontier):
-        """Exibe o conteúdo atual da fronteira."""
+        #Exibe o conteúdo atual da fronteira.
         print("Fronteira atual:")
         for node in frontier:
             print(f"  Estado: {node.state}, Ação: {node.action}, Custo: {node.path_cost}")
@@ -155,17 +168,24 @@ class Agent:
 
     #exibir a fronteira do algoritimo A*
     def show_frontier_A(self, frontier):
-        """Exibe o conteúdo atual da fila de prioridade."""
+        #Exibe o conteúdo atual da fila de prioridade.
         print("Fronteira atual (em ordem de prioridade):")
         for f_cost, node in sorted(frontier, key=lambda x: x[0]):
             print(f"  Estado: {node.state}, Ação: {node.action}, Custo Total (f): {f_cost}")
         print("-" * 30)
 
     def reconstruct_path(self, node):
-        """Reconstrói o caminho da solução a partir do nó objetivo."""
+        #Reconstrói o caminho da solução a partir do nó objetivo.
         path = []
         while node:
             path.append((node.state, node.action))
             node = node.parent
         path.reverse()  # Reverte o caminho para começar no estado inicial
-        return path
+        cont = -1 # começa em menos 1 para não contar o ponto inicial
+        for state, action in path:
+            print(f'{state} : {action}\n')
+            cont+=1
+        print(f'Número de passos do caminho correto: {cont}\n')
+
+    def path_cost(self, passos):
+        print(f'Número de passos do Algoritmo: {passos}\n');
